@@ -28,8 +28,8 @@ void AFruit::OnActorBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* Ot
 	
 	if(OtherActor->IsA(AMyPlayer::StaticClass()))
 	{
+		AntesDeTerminar.Broadcast();
 		Destroy();
-		UE_LOG(LogTemp, Warning, TEXT("Has ganado"));
 	}	
 }
 

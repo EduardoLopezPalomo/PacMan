@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "Fruit.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAntesTerminar);
 UCLASS()
 class PACMAN_API AFruit : public AActor
 {
@@ -18,6 +19,9 @@ public:
 	TSoftObjectPtr<UStaticMesh> outsideMesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="Component")
 	TSoftObjectPtr<UMaterialInterface> ousideMaterial;
+	UPROPERTY( BlueprintAssignable)
+	FAntesTerminar AntesDeTerminar;
+	
 	
 	UFUNCTION()
 	void OnActorBeginOverlap(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);
