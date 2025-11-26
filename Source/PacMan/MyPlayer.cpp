@@ -28,10 +28,14 @@ AMyPlayer::AMyPlayer()
 	mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	mesh->SetupAttachment(RootComponent);
 	material = LoadObject<UMaterialInterface>(nullptr, TEXT("/Game/M_MaterialPlayer.M_MaterialPlayer"));
+	
+	
 	InputMappingContext = CreateDefaultSubobject<UInputMappingContext>(TEXT("InputMappingContext"));
+	
 	move = CreateDefaultSubobject<UInputAction>(TEXT("MoveAction"));
 	sidemove= CreateDefaultSubobject<UInputAction>(TEXT("SideMoveAction"));
 	look= CreateDefaultSubobject<UInputAction>(TEXT("LookAction"));
+	
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 	bUseControllerRotationYaw = true;
 	
@@ -43,6 +47,8 @@ AMyPlayer::AMyPlayer()
 
 	auto camera = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraPlayer"));
 	camera->SetupAttachment(arm);
+	camera->SetRelativeLocation(FVector(0.f, 0.f, 80.f));
+	camera->SetRelativeRotation(FRotator(-20.0f, 0.0f, 0.0f));
 	
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> SphereAsset(TEXT("/Engine/BasicShapes/Sphere.Sphere"));
 
@@ -55,7 +61,7 @@ AMyPlayer::AMyPlayer()
 }
 
 void AMyPlayer::Move(const FInputActionValue& v) {	
-	FVector forward = GetWorld()->GetFirstPlayerController()->PlayerCameraManager->GetCameraRotation().Vector();
+	FVector forward = GetWorld()->GetFirstPlayerController()->GetControlRotation().Vector();
 	AddMovementInput(forward, v.GetMagnitude());
 }
 
